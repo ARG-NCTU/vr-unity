@@ -28,7 +28,7 @@ namespace RosSharp.RosBridgeClient
         protected override void Start()
         {
 			base.Start();
-	}
+		}
 		
         private void Update()
         {

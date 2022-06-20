@@ -71,13 +71,15 @@ public class SimpleCapsuleWithStickMovement : MonoBehaviour
 
 	void SnapTurn()
 	{
+		Vector3 euler = transform.rotation.eulerAngles;
+
 		if (OVRInput.Get(OVRInput.Button.SecondaryThumbstickLeft) ||
 			(RotationEitherThumbstick && OVRInput.Get(OVRInput.Button.PrimaryThumbstickLeft)))
 		{
 			if (ReadyToSnapTurn)
 			{
+				euler.y -= RotationAngle;
 				ReadyToSnapTurn = false;
-				transform.RotateAround(CameraRig.centerEyeAnchor.position, Vector3.up, -RotationAngle);
 			}
 		}
 		else if (OVRInput.Get(OVRInput.Button.SecondaryThumbstickRight) ||
@@ -85,13 +87,15 @@ public class SimpleCapsuleWithStickMovement : MonoBehaviour
 		{
 			if (ReadyToSnapTurn)
 			{
+				euler.y += RotationAngle;
 				ReadyToSnapTurn = false;
-				transform.RotateAround(CameraRig.centerEyeAnchor.position, Vector3.up, RotationAngle);
 			}
 		}
 		else
 		{
 			ReadyToSnapTurn = true;
 		}
+
+		transform.rotation = Quaternion.Euler(euler);
 	}
 }
