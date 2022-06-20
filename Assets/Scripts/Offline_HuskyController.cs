@@ -8,6 +8,35 @@ using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
+//public class movetest : MonoBehaviour
+//{
+
+
+
+//    private void Update()
+
+//    {
+
+//        //move back and forth 
+
+//        var v = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick).y;
+
+//        Vector3 velocity = new Vector3(0, 0, v);
+
+//        velocity = transform.TransformDirection(velocity);
+
+//        velocity *= 5f;
+
+//        transform.localPosition += velocity * Time.fixedDeltaTime;
+
+//        //turning to the left and right 
+
+//        var h = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick).x;
+
+//        transform.Rotate(0, h * 3f, 0);
+
+//    }
+//}
 
 public class Offline_HuskyController : MonoBehaviour
 {
@@ -36,7 +65,7 @@ public class Offline_HuskyController : MonoBehaviour
         //RosSocket
         RosBridgeServerUrl = WebSocketIP;
         rosSocket = new RosSocket(new RosSharp.RosBridgeClient.Protocols.WebSocketNetProtocol(RosBridgeServerUrl));
-        Debug.Log("Established connection with ros");
+        //Debug.Log("Established connection with ros");
 
         InputDevices.GetDevicesAtXRNode(XRNode.RightHand, devices);
         if (devices.Count > 0)
