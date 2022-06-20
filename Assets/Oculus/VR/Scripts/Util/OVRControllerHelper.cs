@@ -57,13 +57,6 @@ public class OVRControllerHelper : MonoBehaviour
 	/// </summary>
 	private Animator m_animator;
 
-	private GameObject m_activeController;
-
-	private bool m_controllerModelsInitialized = false;
-
-	private bool m_hasInputFocus = true;
-	private bool m_hasInputFocusPrev = false;
-
 	private enum ControllerType
 	{
 		QuestAndRiftS = 1,
@@ -78,17 +71,6 @@ public class OVRControllerHelper : MonoBehaviour
 
 	void Start()
 	{
-		if (OVRManager.OVRManagerinitialized)
-		{
-			InitializeControllerModels();
-		}
-	}
-
-	void InitializeControllerModels()
-	{
-		if (m_controllerModelsInitialized)
-			return;
-	
 		OVRPlugin.SystemHeadset headset = OVRPlugin.GetSystemHeadsetType();
 		switch (headset)
 		{
@@ -98,15 +80,12 @@ public class OVRControllerHelper : MonoBehaviour
 			case OVRPlugin.SystemHeadset.Oculus_Quest_2:
 				activeControllerType = ControllerType.Quest2;
 				break;
-			case OVRPlugin.SystemHeadset.Oculus_Link_Quest_2:
-				activeControllerType = ControllerType.Quest2;
-				break;
 			default:
 				activeControllerType = ControllerType.QuestAndRiftS;
 				break;
 		}
 
-		Debug.LogFormat("OVRControllerHelp: Active controller type: {0} for product {1} (headset {2})", activeControllerType, OVRPlugin.productName, headset);
+		Debug.LogFormat("OVRControllerHelp: Active controller type: {0} for product {1}", activeControllerType, OVRPlugin.productName);
 
 		// Hide all controller models until controller get connected
 		m_modelOculusTouchQuestAndRiftSLeftController.SetActive(false);
@@ -115,30 +94,13 @@ public class OVRControllerHelper : MonoBehaviour
 		m_modelOculusTouchRiftRightController.SetActive(false);
 		m_modelOculusTouchQuest2LeftController.SetActive(false);
 		m_modelOculusTouchQuest2RightController.SetActive(false);
-
-		OVRManager.InputFocusAcquired += InputFocusAquired;
-		OVRManager.InputFocusLost += InputFocusLost;
-
-		m_controllerModelsInitialized = true;
 	}
 
 	void Update()
 	{
-		if (!m_controllerModelsInitialized)
-		{
-			if (OVRManager.OVRManagerinitialized)
-			{
-				InitializeControllerModels();
-			}
-			else
-			{
-				return;
-			}
-		}
-
 		bool controllerConnected = OVRInput.IsControllerConnected(m_controller);
 
-		if ((controllerConnected != m_prevControllerConnected) || !m_prevControllerConnectedCached || (m_hasInputFocus != m_hasInputFocusPrev))
+		if ((controllerConnected != m_prevControllerConnected) || !m_prevControllerConnectedCached)
 		{
 			if (activeControllerType == ControllerType.Rift)
 			{
@@ -151,7 +113,6 @@ public class OVRControllerHelper : MonoBehaviour
 
 				m_animator = m_controller == OVRInput.Controller.LTouch ? m_modelOculusTouchRiftLeftController.GetComponent<Animator>() :
 					m_modelOculusTouchRiftRightController.GetComponent<Animator>();
-				m_activeController = m_controller == OVRInput.Controller.LTouch ? m_modelOculusTouchRiftLeftController : m_modelOculusTouchRiftRightController;
 			}
 			else if (activeControllerType == ControllerType.Quest2)
 			{
@@ -164,7 +125,6 @@ public class OVRControllerHelper : MonoBehaviour
 
 				m_animator = m_controller == OVRInput.Controller.LTouch ? m_modelOculusTouchQuest2LeftController.GetComponent<Animator>() :
 					m_modelOculusTouchQuest2RightController.GetComponent<Animator>();
-				m_activeController = m_controller == OVRInput.Controller.LTouch ? m_modelOculusTouchQuest2LeftController : m_modelOculusTouchQuest2RightController;
 			}
 			else /*if (activeControllerType == ControllerType.QuestAndRiftS)*/
 			{
@@ -177,14 +137,10 @@ public class OVRControllerHelper : MonoBehaviour
 
 				m_animator = m_controller == OVRInput.Controller.LTouch ? m_modelOculusTouchQuestAndRiftSLeftController.GetComponent<Animator>() :
 					m_modelOculusTouchQuestAndRiftSRightController.GetComponent<Animator>();
-				m_activeController = m_controller == OVRInput.Controller.LTouch ? m_modelOculusTouchQuestAndRiftSLeftController : m_modelOculusTouchQuestAndRiftSRightController;
 			}
-
-			m_activeController.SetActive(m_hasInputFocus && controllerConnected);
 
 			m_prevControllerConnected = controllerConnected;
 			m_prevControllerConnectedCached = true;
-			m_hasInputFocusPrev = m_hasInputFocus;
 		}
 
 		if (m_animator != null)
@@ -199,15 +155,5 @@ public class OVRControllerHelper : MonoBehaviour
 			m_animator.SetFloat("Trigger", OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller));
 			m_animator.SetFloat("Grip", OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller));
 		}
-	}
-
-	public void InputFocusAquired()
-	{
-		m_hasInputFocus = true;
-	}
-
-	public void InputFocusLost()
-	{
-		m_hasInputFocus = false;
 	}
 }

@@ -42,7 +42,6 @@ namespace RosSharp.Urdf.Editor
         public static void Create(string filename)
         {
             Robot robot = new Robot(filename);
-            Debug.Log(filename);
 
             if (!UrdfAssetPathHandler.IsValidAssetPath(robot.filename))
             {

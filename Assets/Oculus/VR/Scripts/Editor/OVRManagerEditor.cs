@@ -20,12 +20,11 @@ public class OVRManagerEditor : Editor
 {
 	override public void OnInspectorGUI()
 	{
-		OVRRuntimeSettings runtimeSettings = OVRRuntimeSettings.GetRuntimeSettings();
-		OVRProjectConfig projectConfig = OVRProjectConfig.GetProjectConfig();
-
 #if UNITY_ANDROID
-		OVRProjectConfigEditor.DrawTargetDeviceInspector(projectConfig);
-		EditorGUILayout.Space();
+		OVRProjectConfig projectConfig = OVRProjectConfig.GetProjectConfig();
+        OVRProjectConfigEditor.DrawTargetDeviceInspector(projectConfig);
+
+        EditorGUILayout.Space();
 #endif
 
 		DrawDefaultInspector();
@@ -38,25 +37,18 @@ public class OVRManagerEditor : Editor
 		EditorGUILayout.Space();
 		EditorGUILayout.LabelField("Display", EditorStyles.boldLabel);
 
-		OVRManager.ColorSpace colorGamut = runtimeSettings.colorSpace;
+		OVRManager.ColorSpace colorGamut = manager.colorGamut;
 		OVREditorUtil.SetupEnumField(target, new GUIContent("Color Gamut",
-			"The target color gamut when displayed on the HMD"), ref colorGamut, ref modified,
-			"https://developer.oculus.com/documentation/unity/unity-color-space/");
+			"The target color gamut when displayed on the HMD"), ref colorGamut, ref modified);
 		manager.colorGamut = colorGamut;
-
-		if (modified)
-		{
-			runtimeSettings.colorSpace = colorGamut;
-			OVRRuntimeSettings.CommitRuntimeSettings(runtimeSettings);
-		}
 #endif
-
-		EditorGUILayout.Space();
-        OVRProjectConfigEditor.DrawProjectConfigInspector(projectConfig);
 
 #if UNITY_ANDROID
 		EditorGUILayout.Space();
-		EditorGUILayout.LabelField("Mixed Reality Capture for Quest", EditorStyles.boldLabel);
+        OVRProjectConfigEditor.DrawProjectConfigInspector(projectConfig);
+
+		EditorGUILayout.Space();
+		EditorGUILayout.LabelField("Mixed Reality Capture for Quest (experimental)", EditorStyles.boldLabel);
 		EditorGUI.indentLevel++;
 		OVREditorUtil.SetupEnumField(target, "ActivationMode", ref manager.mrcActivationMode, ref modified);
 		EditorGUI.indentLevel--;
@@ -64,10 +56,8 @@ public class OVRManagerEditor : Editor
 
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
 		EditorGUILayout.Space();
-		EditorGUILayout.BeginHorizontal();
-		manager.expandMixedRealityCapturePropertySheet = EditorGUILayout.BeginFoldoutHeaderGroup(manager.expandMixedRealityCapturePropertySheet, "Mixed Reality Capture");
-		OVREditorUtil.DisplayDocLink("https://developer.oculus.com/documentation/unity/unity-mrc/");
-		EditorGUILayout.EndHorizontal();
+		EditorGUILayout.LabelField("Mixed Reality Capture", EditorStyles.boldLabel);
+		OVREditorUtil.SetupBoolField(target, "Show Properties", ref manager.expandMixedRealityCapturePropertySheet, ref modified);
 		if (manager.expandMixedRealityCapturePropertySheet)
 		{
 			string[] layerMaskOptions = new string[32];
@@ -82,6 +72,7 @@ public class OVRManagerEditor : Editor
 
 			EditorGUI.indentLevel++;
 
+			EditorGUILayout.Space();
 			OVREditorUtil.SetupBoolField(target, "enableMixedReality", ref manager.enableMixedReality, ref modified);
 			OVREditorUtil.SetupEnumField(target, "compositionMethod", ref manager.compositionMethod, ref modified);
 			OVREditorUtil.SetupLayerMaskField(target, "extraHiddenLayers", ref manager.extraHiddenLayers, layerMaskOptions, ref modified);
@@ -96,7 +87,6 @@ public class OVRManagerEditor : Editor
 
 				OVREditorUtil.SetupColorField(target, "backdropColor (target, Rift)", ref manager.externalCompositionBackdropColorRift, ref modified);
 				OVREditorUtil.SetupColorField(target, "backdropColor (target, Quest)", ref manager.externalCompositionBackdropColorQuest, ref modified);
-				EditorGUI.indentLevel--;
 			}
 
 			if (manager.compositionMethod == OVRManager.CompositionMethod.Direct)
@@ -143,32 +133,10 @@ public class OVRManagerEditor : Editor
 		}
 #endif
 
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_ANDROID
-		// Insight Passthrough section
-#if UNITY_ANDROID
-		bool passthroughCapabilityEnabled = projectConfig.insightPassthroughEnabled;
-		EditorGUI.BeginDisabledGroup(!passthroughCapabilityEnabled);
-		GUIContent enablePassthroughContent = new GUIContent("Enable Passthrough", "Enables passthrough functionality for the scene. Can be toggled at runtime. Passthrough Capability must be enabled in the project settings.");
-#else
-		GUIContent enablePassthroughContent = new GUIContent("Enable Passthrough", "Enables passthrough functionality for the scene. Can be toggled at runtime.");
-#endif
-		EditorGUILayout.Space();
-		EditorGUILayout.LabelField("Insight Passthrough", EditorStyles.boldLabel);
-#if UNITY_ANDROID
-		if (!passthroughCapabilityEnabled) {
-			EditorGUILayout.LabelField("Requires Passthrough Capability to be enabled in the General section of the Quest features.", EditorStyles.wordWrappedLabel);
-		}
-#endif
-		OVREditorUtil.SetupBoolField(target, enablePassthroughContent, ref manager.isInsightPassthroughEnabled, ref modified);
-#if UNITY_ANDROID
-		EditorGUI.EndDisabledGroup();
-#endif
-#endif
-
-		if (modified)
-		{
-			EditorUtility.SetDirty(target);
-		}
+        if (modified)
+        {
+            EditorUtility.SetDirty(target);
+        }
 	}
 
 }
