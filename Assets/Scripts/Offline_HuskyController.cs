@@ -10,6 +10,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Offline_HuskyController : MonoBehaviour
 {
+    public float linear_speed = 0.5f;
+    public float angular_speed = 0.3f;
     RosSocket rosSocket;
     string joystick_x;
     string joystick_y;
@@ -64,13 +66,13 @@ public class Offline_HuskyController : MonoBehaviour
 
         velocity = transform.TransformDirection(velocity);
 
-        velocity *= 0.5f;
+        velocity *= linear_speed;
 
         transform.localPosition += velocity * Time.fixedDeltaTime;
 
         float x = joyValue.x;
 
-        transform.Rotate(0, x * 0.3f, 0);
+        transform.Rotate(0, x * angular_speed, 0);
         //------------------Pub_joyValue.x,y------------------------------//
 
         //string temp_trigger = triggerValue.ToString("0.000");
@@ -93,8 +95,8 @@ public class Offline_HuskyController : MonoBehaviour
 
         std_msgs.Float32MultiArray message_xy = new std_msgs.Float32MultiArray();
         message_xy.data = new float[2];
-        message_xy.data[0] = 0.5f * x;
-        message_xy.data[1] = 0.3f * y;
+        message_xy.data[0] = linear_speed * x;
+        message_xy.data[1] = angular_speed * y;
 
         rosSocket.Publish(vr_joystick_xy, message_xy);
         Debug.Log("y val: " + message_xy.data[0]);
