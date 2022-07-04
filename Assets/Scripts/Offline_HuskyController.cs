@@ -93,8 +93,8 @@ public class Offline_HuskyController : MonoBehaviour
 
         std_msgs.Float32MultiArray message_xy = new std_msgs.Float32MultiArray();
         message_xy.data = new float[2];
-        message_xy.data[0] = x;
-        message_xy.data[1] = y;
+        message_xy.data[0] = 0.5f * x;
+        message_xy.data[1] = 0.3f * y;
 
         rosSocket.Publish(vr_joystick_xy, message_xy);
         Debug.Log("y val: " + message_xy.data[0]);
