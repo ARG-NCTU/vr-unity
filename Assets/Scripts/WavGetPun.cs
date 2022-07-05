@@ -19,7 +19,7 @@ public class WavGetPun : MonoBehaviour
 
     void Start()
     {
-        RosBridgeServerUrl = "ws://192.168.0.104:9090";
+        RosBridgeServerUrl = "ws://111.70.9.53:9090"; //"ws://111.70.9.53:9090"
         // GameObject.FindGameObjectWithTag("x1").GetComponent<RosConnector>().RosBridgeServerUrl;
         rosSocket = new RosSocket(new RosSharp.RosBridgeClient.Protocols.WebSocketNetProtocol(RosBridgeServerUrl));
         // Debug.Log("Established connection with ros(WAV PLAYER)");
@@ -31,9 +31,11 @@ public class WavGetPun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Debug.Log("ROS_Audio Update");
         if(isMessageReceived)
         {
-            // Debug.Log("ROS_Audio Get");
+            Debug.Log("ROS_Audio Get");
+            Debug.Log(LeftChannel[5]);
             feedback.RPC("RPC_Audio", RpcTarget.All, LeftChannel);
             isMessageReceived = false;
         }

@@ -8,12 +8,46 @@ using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
+//public class movetest : MonoBehaviour
+//{
+
+
+
+//    private void Update()
+
+//    {
+
+//        //move back and forth 
+
+//        var v = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick).y;
+
+//        Vector3 velocity = new Vector3(0, 0, v);
+
+//        velocity = transform.TransformDirection(velocity);
+
+//        velocity *= 5f;
+
+//        transform.localPosition += velocity * Time.fixedDeltaTime;
+
+//        //turning to the left and right 
+
+//        var h = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick).x;
+
+//        transform.Rotate(0, h * 3f, 0);
+
+//    }
+//}
+
 public class Offline_HuskyController : MonoBehaviour
 {
     RosSocket rosSocket;
+    string publication_test; //Pub_test
+    string primary_button;
+    string scondary_button;
+    string grip;
+    string trigger;
     string joystick_x;
     string joystick_y;
-    string vr_joystick_xy;
 
 
     //VR Device
@@ -46,9 +80,15 @@ public class Offline_HuskyController : MonoBehaviour
 
 
         }
+        //Topic name
+        //publication_test = rosSocket.Advertise<std_msgs.String>("publication_test"); //Pub_test
+        //primary_button = rosSocket.Advertise<std_msgs.Bool>("vr/primarybutton");
+        //scondary_button = rosSocket.Advertise<std_msgs.Bool>("vr/secondarybutton");
+        //grip = rosSocket.Advertise<std_msgs.Float32>("vr/grip");
+        //trigger = rosSocket.Advertise<std_msgs.Float32>("vr/trigger");
         joystick_y = rosSocket.Advertise<std_msgs.Float32>("vr/joystick_y");
         joystick_x = rosSocket.Advertise<std_msgs.Float32>("vr/joystick_x");
-        vr_joystick_xy = rosSocket.Advertise<std_msgs.Float32MultiArray>("vr/joystick_xy");
+
     }
 
     void Update()
@@ -56,6 +96,8 @@ public class Offline_HuskyController : MonoBehaviour
 
         //------------------Pub_Joystick------------------------------//
         leftController.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 joyValue);
+        //leftController.TryGetFeatureValue(CommonUsages.grip, out float gripLeftValue);
+
         //Debug.Log("Joy Value x " + joyValue.x);
         //Debug.Log("Joy Value y " + joyValue.y);
         float y = joyValue.y;
@@ -90,15 +132,6 @@ public class Offline_HuskyController : MonoBehaviour
         };
 
         rosSocket.Publish(joystick_x, message_x);
-
-        std_msgs.Float32MultiArray message_xy = new std_msgs.Float32MultiArray();
-        message_xy.data = new float[2];
-        message_xy.data[0] = x;
-        message_xy.data[1] = y;
-
-        rosSocket.Publish(vr_joystick_xy, message_xy);
-        Debug.Log("y val: " + message_xy.data[0]);
-        Debug.Log("x val: " + message_xy.data[1]);
 
     }
 }

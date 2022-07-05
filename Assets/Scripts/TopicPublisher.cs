@@ -12,11 +12,10 @@ public class TopicPublisher : MonoBehaviour
     RosSocket rosSocket;
     string joystick_x;
     string joystick_y;
-    string vr_joystick_xy;
 
     //VR Device
     public string FrameId = "Unity";
-    public string WebSocketIP = "ws://192.168.0.104:9090"; //IP address
+    public string WebSocketIP = "ws://192.168.0.100:9090"; //IP address
     public ControllersManager controllers;
 
     private string RosBridgeServerUrl; //IP address
@@ -36,7 +35,6 @@ public class TopicPublisher : MonoBehaviour
         //Topic name
         joystick_y = rosSocket.Advertise<std_msgs.Float32>("vr/joystick_y");
         joystick_x = rosSocket.Advertise<std_msgs.Float32>("vr/joystick_x");
-        vr_joystick_xy = rosSocket.Advertise<std_msgs.Float32MultiArray>("vr/joystick_xy");
     }
 
     // Update is called once per frame
@@ -65,14 +63,5 @@ public class TopicPublisher : MonoBehaviour
         };
 
         rosSocket.Publish(joystick_x, message_x);
-
-        std_msgs.Float32MultiArray message_xy = new std_msgs.Float32MultiArray();
-        message_xy.data = new float[2];
-        message_xy.data[0] = x;
-        message_xy.data[1] = y;
-
-        rosSocket.Publish(vr_joystick_xy, message_xy);
-        Debug.Log("y val: " + message_xy.data[0]);
-        Debug.Log("x val: " + message_xy.data[1]);
     }
 }

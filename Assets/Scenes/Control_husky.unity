@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44658786, g: 0.49642265, b: 0.5748251, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -498,7 +498,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &119629065
 Transform:
   m_ObjectHideFlags: 0
@@ -543,7 +543,7 @@ MonoBehaviour:
   SecondsTimeout: 10
   Serializer: 0
   protocol: 0
-  RosBridgeServerUrl: ws://192.168.0.104:9090
+  RosBridgeServerUrl: ws://111.70.9.53:9090
 --- !u!64 &119629068
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2095,9 +2095,12 @@ GameObject:
   - component: {fileID: 386919740}
   - component: {fileID: 386919743}
   - component: {fileID: 386919745}
+  - component: {fileID: 386919744}
+  - component: {fileID: 386919746}
+  - component: {fileID: 386919747}
   m_Layer: 0
   m_Name: x1
-  m_TagString: Untagged
+  m_TagString: x1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2155,7 +2158,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386919731}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e39a13b12af486f4eab94bd9b169dd54, type: 3}
   m_Name: 
@@ -2180,7 +2183,7 @@ MonoBehaviour:
   SecondsTimeout: 10
   Serializer: 0
   protocol: 0
-  RosBridgeServerUrl: ws://192.168.0.104:9090
+  RosBridgeServerUrl: ws://111.70.9.53:9090
 --- !u!114 &386919737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2231,7 +2234,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386919731}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8313497688ba18a5eb831dd5a9f708c2, type: 3}
   m_Name: 
@@ -2256,13 +2259,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386919731}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 593a654754fbbd8459c414771a032502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   FrameId: Unity
-  WebSocketIP: ws://10.42.0.2:9090
+  WebSocketIP: ws://111.70.9.53:9090
 --- !u!114 &386919743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2277,7 +2280,118 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topic_name: /rode_allch
   feedbackInput: {fileID: 794686092}
+--- !u!82 &386919744
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386919731}
+  m_Enabled: 0
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &386919745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386919731}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34ba1706e413f8232a68b67e72760500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /scan_pcl
+  TimeStep: 0
+  feedbackInput: {fileID: 794686092}
+--- !u!114 &386919746
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2286,12 +2400,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 386919731}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34ba1706e413f8232a68b67e72760500, type: 3}
+  m_Script: {fileID: 11500000, guid: 43e3bbb7b8e11ed9795d5cd64fedca41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /camera/color/image_raw/compressed
+  TimeStep: 0
+  meshRenderer: {fileID: 119629069}
+--- !u!114 &386919747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386919731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71832589b242723d289b00262e1261bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Topic: /scan_pcl
   TimeStep: 0
-  feedbackInput: {fileID: 794686092}
+  LidarLayer: 5
+  LidarHeight: 0.2
+  offset: {fileID: 1195356468}
+  pointSize: 10
 --- !u!43 &443584722
 Mesh:
   m_ObjectHideFlags: 0
@@ -8602,7 +8734,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1647737851}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!20 &1647737854
 Camera:
   m_ObjectHideFlags: 0

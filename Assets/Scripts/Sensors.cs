@@ -74,9 +74,9 @@ public class Sensors : MonoBehaviour
     [PunRPC]
     public void RPC_Audio(float[] LeftChannel)
     {
-        // Debug.Log("RPC_Audio");
+        Debug.Log("RPC_Audio");
+        Debug.Log(LeftChannel[5]);
         this.LeftChannel = LeftChannel;
-        // Debug.Log(LeftChannel[5]);
         AudioClip audioClip = AudioClip.Create("WavFileSound", 16000, 2, 8000, false);
         audioClip.SetData(this.LeftChannel, 0);
         AudioSource audio = GetComponent<AudioSource>();
@@ -134,13 +134,13 @@ public class Sensors : MonoBehaviour
                 y_posi = n * point_step + 4;
                 z_posi = n * point_step + 8;
 
-                x = BitConverter.ToSingle(byteArray, x_posi);
-                y = BitConverter.ToSingle(byteArray, y_posi);
+                y = BitConverter.ToSingle(byteArray, x_posi);
+                x = BitConverter.ToSingle(byteArray, y_posi);
                 z = BitConverter.ToSingle(byteArray, z_posi);
 
                 z = z + w*LidarHeight;
 
-                pcl[w*size+n] = new Vector3(x, z, y);
+                pcl[w*size+n] = new Vector3(-x, z, y);
 
                 rgb_posi = n * point_step + 8; // 16   8: laser scan
 

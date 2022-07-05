@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using RosSharp.RosBridgeClient;
 using std_msgs = RosSharp.RosBridgeClient.MessageTypes.Std;
-using UnityEngine;
 
 public class WavPlayer : MonoBehaviour
 {
@@ -15,29 +15,35 @@ public class WavPlayer : MonoBehaviour
     private float[] LeftChannel = new float[16000];
     // private float[] StereoChannel = new float[88200];
 
-    private int pos = 0, SampleCount = 0;
+    // private int pos = 0, SampleCount = 0;
     private bool isMessageReceived = false;
     // Start is called before the first frame update
+
     void Start()
     {
-        RosBridgeServerUrl = GameObject.FindGameObjectWithTag("x1").GetComponent<RosConnector>().RosBridgeServerUrl;
+        RosBridgeServerUrl = GameObject.FindGameObjectWithTag("x1").GetComponent<RosConnector>().RosBridgeServerUrl; //"ws://111.70.9.53:9090"; 
         rosSocket = new RosSocket(new RosSharp.RosBridgeClient.Protocols.WebSocketNetProtocol(RosBridgeServerUrl));
-        Debug.Log("Established connection with ros(WAV PLAYER)");
-
         audio_data = rosSocket.Subscribe<std_msgs.Float32MultiArray>(topic_name, data_process);
+        Debug.Log("ROS_Audio");
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Debug.Log("ROS_audio");
+
         if (isMessageReceived)
         {
+            // Debug.Log("ROS_Audio Get");
+            // Debug.Log(LeftChannel[5]);
+
             AudioClip audioClip = AudioClip.Create("WavFileSound", 16000, 2, 8000, false);
             audioClip.SetData(LeftChannel, 0);
             AudioSource audio = GetComponent<AudioSource>();
             audio.clip = audioClip;
             audio.Play();
-            // Debug.Log(isMessageReceived);
+
             isMessageReceived = false;
         }
 
