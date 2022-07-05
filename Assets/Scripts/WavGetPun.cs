@@ -23,7 +23,7 @@ public class WavGetPun : MonoBehaviour
         // GameObject.FindGameObjectWithTag("x1").GetComponent<RosConnector>().RosBridgeServerUrl;
         rosSocket = new RosSocket(new RosSharp.RosBridgeClient.Protocols.WebSocketNetProtocol(RosBridgeServerUrl));
         // Debug.Log("Established connection with ros(WAV PLAYER)");
-        feedback = feedbackInput.GetComponent<PhotonView>();
+        // feedback = feedbackInput.GetComponent<PhotonView>();
         audio_data = rosSocket.Subscribe<std_msgs.Float32MultiArray>(topic_name, data_process);
         Debug.Log("ROS_Audio");
     }
@@ -36,7 +36,7 @@ public class WavGetPun : MonoBehaviour
         {
             Debug.Log("ROS_Audio Get");
             Debug.Log(LeftChannel[5]);
-            feedback.RPC("RPC_Audio", RpcTarget.All, LeftChannel);
+            // feedback.RPC("RPC_Audio", RpcTarget.All, LeftChannel);
             isMessageReceived = false;
         }
     }

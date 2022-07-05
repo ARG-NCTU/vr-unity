@@ -35,8 +35,8 @@ public class WavPlayer : MonoBehaviour
 
         if (isMessageReceived)
         {
-            // Debug.Log("ROS_Audio Get");
-            // Debug.Log(LeftChannel[5]);
+            Debug.Log("ROS_Audio Get");
+            Debug.Log(LeftChannel[5]);
 
             AudioClip audioClip = AudioClip.Create("WavFileSound", 16000, 2, 8000, false);
             audioClip.SetData(LeftChannel, 0);

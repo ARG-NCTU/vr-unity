@@ -4677,11 +4677,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750899392399679354}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 593a654754fbbd8459c414771a032502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  linear_speed: 0.5
+  angular_speed: 0.3
   FrameId: Unity
   WebSocketIP: ws://10.42.0.2:9090
 --- !u!114 &518696919847266492
